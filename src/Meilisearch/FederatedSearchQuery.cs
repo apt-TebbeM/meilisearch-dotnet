@@ -11,6 +11,6 @@ namespace Meilisearch
         /// Federated search options
         /// </summary>
         [JsonPropertyName("federationOptions")]
-        public MultiSearchFederationOptions FederationOptions { get; set; }
+        public MultiSearchQueryFederationOptions FederationOptions { get; set; }
     }
 }

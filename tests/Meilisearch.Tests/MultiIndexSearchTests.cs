@@ -122,7 +122,7 @@ namespace Meilisearch.Tests
         [Fact]
         public async Task FederatedSearchWithLimitAndOffset()
         {
-            var federatedquer = new FederatedMultiSearchQuery()
+            var federatedQuery = new FederatedMultiSearchQuery()
             {
                 Queries = new List<FederatedSearchQuery>()
                 {
@@ -131,10 +131,32 @@ namespace Meilisearch.Tests
                 },
                 FederationOptions = new MultiSearchFederationOptions() { Limit = 2, Offset = 0 }
             };
-            var result = await _fixture.DefaultClient.FederatedMultiSearchAsync<Movie>(federatedquer
-            );
 
-            var testJson = JsonSerializer.Serialize(federatedquer);
+            var result = await _fixture.DefaultClient
+                .FederatedMultiSearchAsync<Movie>(federatedQuery);
+
+            var testJson = JsonSerializer.Serialize(federatedQuery);
+
+            result.Hits.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task FederatedSearchWithPageAndHitsPerPage()
+        {
+            var federatedQuery = new FederatedMultiSearchQuery()
+            {
+                Queries = new List<FederatedSearchQuery>()
+                {
+                    new FederatedSearchQuery() { IndexUid = _index1.Uid, Q = "", Filter = "genre = 'SF'" },
+                    new FederatedSearchQuery() { IndexUid = _index2.Uid, Q = "", Filter = "genre = 'Action'" }
+                },
+                FederationOptions = new MultiSearchFederationOptions() { Page = 2, HitsPerPage = 2 }
+            };
+
+            var result = await _fixture.DefaultClient
+                .FederatedMultiSearchAsync<Movie>(federatedQuery);
+
+            var testJson = JsonSerializer.Serialize(federatedQuery);
 
             result.Hits.Should().HaveCount(2);
         }
