@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -39,7 +38,10 @@ namespace Meilisearch.Converters
             }
             else
             {
-                JsonSerializer.Serialize(writer, value);
+                // Clone options and set to ignore nulls
+                var newOptions = new JsonSerializerOptions(options);
+                newOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                JsonSerializer.Serialize(writer, value, newOptions);
             }
         }
         private static void WriteEmptyObject(Utf8JsonWriter writer)

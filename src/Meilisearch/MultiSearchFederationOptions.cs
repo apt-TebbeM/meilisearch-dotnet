@@ -11,24 +11,24 @@ namespace Meilisearch
         /// Number of documents to skip
         /// </summary>
         [JsonPropertyName("offset")]
-        public int Offset { get; set; }
+        public int? Offset { get; set; }
 
         /// <summary>
         /// Maximum number of documents returned
         /// </summary>
         [JsonPropertyName("limit")]
-        public int Limit { get; set; }
+        public int? Limit { get; set; }
 
         /// <summary>
         /// Page for exhaustive paging (wins over the limit and offset parameters)
         /// </summary>
         [JsonPropertyName("page")]
-        public int Page { get; set; }
+        public int? Page { get; set; }
 
         /// <summary>
         /// HitsPerPage for exhaustive paging (wins over the limit and offset parameters)
         /// </summary>
         [JsonPropertyName("hitsPerPage")]
-        public int HitsPerPage { get; set; }
+        public int? HitsPerPage { get; set; }
     }
 }
